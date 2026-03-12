@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import MarkdownEditor from './components/MarkdownEditor'
 import MarkdownPreview from './components/MarkdownPreview'
+import NoteList from './components/NoteList'
+import { NoteProvider, useNotes } from './contexts/NoteContext'
 
 const DEFAULT_CONTENT = `# 极客风格 Markdown 编辑器
 
@@ -104,8 +106,27 @@ function createUser(user: User): User {
 开始你的创作吧！
 `
 
-function App() {
+function AppContent() {
+  const { currentNote, updateNote, createNote } = useNotes()
   const [content, setContent] = useState(DEFAULT_CONTENT)
+
+  const handleContentChange = (newContent: string) => {
+    setContent(newContent)
+    if (currentNote) {
+      updateNote({
+        ...currentNote,
+        content: newContent,
+      })
+    }
+  }
+
+  const handleCreateFirstNote = () => {
+    const note = createNote('我的第一条笔记')
+    updateNote({
+      ...note,
+      content: DEFAULT_CONTENT,
+    })
+  }
 
   return (
     <div className="h-screen w-screen bg-geek-bg flex flex-col">
@@ -116,25 +137,60 @@ function App() {
       </header>
       
       <main className="flex-1 flex flex-col md:flex-row overflow-hidden">
-        <div className="flex-1 h-full border-r border-geek-border flex flex-col">
+        <div className="w-64 h-full border-r border-geek-border flex flex-col flex-shrink-0">
+          <div className="h-8 border-b border-geek-border flex items-center px-4 bg-geek-bg">
+            <span className="text-geek-muted font-mono text-sm">NOTES</span>
+          </div>
+          <div className="flex-1 overflow-hidden">
+            <NoteList />
+          </div>
+        </div>
+        
+        <div className="flex-1 h-full border-r border-geek-border flex flex-col min-w-0">
           <div className="h-8 border-b border-geek-border flex items-center px-4 bg-geek-bg">
             <span className="text-geek-muted font-mono text-sm">EDITOR</span>
           </div>
           <div className="flex-1 overflow-hidden">
-            <MarkdownEditor value={content} onChange={setContent} />
+            {currentNote ? (
+              <MarkdownEditor value={currentNote.content} onChange={handleContentChange} />
+            ) : (
+              <div className="h-full flex flex-col items-center justify-center text-geek-muted font-mono">
+                <p className="mb-4">选择一条笔记开始编辑</p>
+                <button
+                  onClick={handleCreateFirstNote}
+                  className="px-4 py-2 bg-geek-highlight text-geek-bg font-mono text-sm font-bold hover:bg-geek-highlight-hover transition-colors"
+                >
+                  创建第一条笔记
+                </button>
+              </div>
+            )}
           </div>
         </div>
         
-        <div className="flex-1 h-full flex flex-col">
+        <div className="flex-1 h-full flex flex-col min-w-0">
           <div className="h-8 border-b border-geek-border flex items-center px-4 bg-geek-bg">
             <span className="text-geek-muted font-mono text-sm">PREVIEW</span>
           </div>
           <div className="flex-1 overflow-hidden">
-            <MarkdownPreview content={content} />
+            {currentNote ? (
+              <MarkdownPreview content={currentNote.content} />
+            ) : (
+              <div className="h-full flex items-center justify-center text-geek-muted font-mono">
+                <p>选择一条笔记查看预览</p>
+              </div>
+            )}
           </div>
         </div>
       </main>
     </div>
+  )
+}
+
+function App() {
+  return (
+    <NoteProvider>
+      <AppContent />
+    </NoteProvider>
   )
 }
 

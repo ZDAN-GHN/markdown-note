@@ -15,6 +15,7 @@ export default function MarkdownEditor({ value, onChange }: MarkdownEditorProps)
   const editorRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | null>(null);
   const isInitializedRef = useRef(false);
+  const isInternalChangeRef = useRef(false);
 
   useEffect(() => {
     if (!editorRef.current) return;
@@ -90,9 +91,10 @@ export default function MarkdownEditor({ value, onChange }: MarkdownEditorProps)
         }),
         EditorView.lineWrapping,
         EditorView.updateListener.of((update) => {
-          if (update.docChanged) {
+          if (update.docChanged && !isInternalChangeRef.current) {
             onChange(update.state.doc.toString());
           }
+          isInternalChangeRef.current = false;
         }),
       ],
     });
@@ -118,11 +120,11 @@ export default function MarkdownEditor({ value, onChange }: MarkdownEditorProps)
       requestAnimationFrame(() => {
         if (!viewRef.current) return;
         
-        const docLength = viewRef.current.state.doc.length;
+        isInternalChangeRef.current = true;
         const transaction = viewRef.current.state.update({
           changes: {
             from: 0,
-            to: docLength,
+            to: viewRef.current.state.doc.length,
             insert: value,
           },
         });

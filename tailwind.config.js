@@ -12,7 +12,11 @@ export default {
           border: '#333333',
           text: '#c0c0c0',
           highlight: '#39ff14',
+          'highlight-hover': '#32d912',
           muted: '#666666',
+          input: '#1a1a1a',
+          hover: '#151515',
+          active: '#1a1a1a',
         },
       },
       fontFamily: {
