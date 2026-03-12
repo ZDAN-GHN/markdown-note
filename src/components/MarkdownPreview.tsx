@@ -11,7 +11,7 @@ interface MarkdownPreviewProps {
 export default function MarkdownPreview({ content }: MarkdownPreviewProps) {
   return (
     <div className="h-full w-full overflow-auto">
-      <div className="markdown-preview p-6 text-geek-text font-mono text-sm leading-relaxed" style={{ backgroundColor: '#1a1a1a', minHeight: '100%' }}>
+      <div className="markdown-preview p-4 text-geek-text font-mono text-sm" style={{ backgroundColor: '#1a1a1a', minHeight: '100%', lineHeight: '1.4' }}>
         <style>{`
           .markdown-preview h1 {
             font-size: 2em;
@@ -42,8 +42,8 @@ export default function MarkdownPreview({ content }: MarkdownPreviewProps) {
             color: #39ff14;
           }
           .markdown-preview p {
-            margin: 1em 0;
-            line-height: 1.6;
+            margin: 0 0 1em 0;
+            line-height: 1.4;
           }
           .markdown-preview code {
             background-color: #1a1a1a;
