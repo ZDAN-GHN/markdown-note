@@ -40,18 +40,18 @@ export default function MarkdownEditor({ value, onChange }: MarkdownEditorProps)
             backgroundColor: '#1a1a1a',
             color: '#c0c0c0',
             fontSize: '14px',
-            fontFamily: '"Fira Code", "Monaco", "Courier New", monospace',
+            fontFamily: '"Inter", "Helvetica", "Arial", sans-serif',
           },
           '&.cm-editor': {
             height: '100%',
           },
           '.cm-scroller': {
-            fontFamily: '"Fira Code", "Monaco", "Courier New", monospace',
+            fontFamily: '"Inter", "Helvetica", "Arial", sans-serif',
             overflow: 'auto',
           },
           '.cm-content': {
             padding: '16px',
-            fontFamily: '"Fira Code", "Monaco", "Courier New", monospace',
+            fontFamily: '"Inter", "Helvetica", "Arial", sans-serif',
           },
           '.cm-gutters': {
             backgroundColor: '#1a1a1a',
@@ -117,19 +117,15 @@ export default function MarkdownEditor({ value, onChange }: MarkdownEditorProps)
     
     const currentValue = viewRef.current.state.doc.toString();
     if (value !== currentValue) {
-      requestAnimationFrame(() => {
-        if (!viewRef.current) return;
-        
-        isInternalChangeRef.current = true;
-        const transaction = viewRef.current.state.update({
-          changes: {
-            from: 0,
-            to: viewRef.current.state.doc.length,
-            insert: value,
-          },
-        });
-        viewRef.current.dispatch(transaction);
+      isInternalChangeRef.current = true;
+      const transaction = viewRef.current.state.update({
+        changes: {
+          from: 0,
+          to: viewRef.current.state.doc.length,
+          insert: value,
+        },
       });
+      viewRef.current.dispatch(transaction);
     }
   }, [value]);
 

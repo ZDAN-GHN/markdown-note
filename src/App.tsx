@@ -131,7 +131,7 @@ function AppContent() {
   return (
     <div className="h-screen w-screen bg-geek-bg flex flex-col">
       <header className="h-12 border-b border-geek-border flex items-center px-4 bg-geek-bg">
-        <h1 className="text-geek-highlight font-mono text-lg font-bold">
+        <h1 className="text-geek-highlight font-sans text-lg font-bold">
           &lt;GeekMarkdown /&gt;
         </h1>
       </header>
@@ -139,7 +139,7 @@ function AppContent() {
       <main className="flex-1 flex flex-col md:flex-row overflow-hidden">
         <div className="w-64 h-full border-r border-geek-border flex flex-col flex-shrink-0">
           <div className="h-8 border-b border-geek-border flex items-center px-4 bg-geek-bg">
-            <span className="text-geek-muted font-mono text-sm">NOTES</span>
+            <span className="text-geek-muted font-sans text-sm">NOTES</span>
           </div>
           <div className="flex-1 overflow-hidden">
             <NoteList />
@@ -148,17 +148,17 @@ function AppContent() {
         
         <div className="flex-1 h-full border-r border-geek-border flex flex-col min-w-0">
           <div className="h-8 border-b border-geek-border flex items-center px-4 bg-geek-bg">
-            <span className="text-geek-muted font-mono text-sm">EDITOR</span>
+            <span className="text-geek-muted font-sans text-sm">EDITOR</span>
           </div>
           <div className="flex-1 overflow-hidden">
             {currentNote ? (
               <MarkdownEditor value={currentNote.content} onChange={handleContentChange} />
             ) : (
-              <div className="h-full flex flex-col items-center justify-center text-geek-muted font-mono">
+              <div className="h-full flex flex-col items-center justify-center text-geek-muted font-sans">
                 <p className="mb-4">选择一条笔记开始编辑</p>
                 <button
                   onClick={handleCreateFirstNote}
-                  className="px-4 py-2 bg-geek-highlight text-geek-bg font-mono text-sm font-bold hover:bg-geek-highlight-hover transition-colors"
+                  className="px-4 py-2 bg-geek-highlight text-geek-bg font-sans text-sm font-bold hover:bg-geek-highlight-hover transition-colors"
                 >
                   创建第一条笔记
                 </button>
@@ -169,13 +169,13 @@ function AppContent() {
         
         <div className="flex-1 h-full flex flex-col min-w-0">
           <div className="h-8 border-b border-geek-border flex items-center px-4 bg-geek-bg">
-            <span className="text-geek-muted font-mono text-sm">PREVIEW</span>
+            <span className="text-geek-muted font-sans text-sm">PREVIEW</span>
           </div>
           <div className="flex-1 overflow-hidden">
             {currentNote ? (
               <MarkdownPreview content={currentNote.content} />
             ) : (
-              <div className="h-full flex items-center justify-center text-geek-muted font-mono">
+              <div className="h-full flex items-center justify-center text-geek-muted font-sans">
                 <p>选择一条笔记查看预览</p>
               </div>
             )}

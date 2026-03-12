@@ -21,6 +21,7 @@ export default {
       },
       fontFamily: {
         mono: ['"Fira Code"', '"Monaco"', '"Courier New"', 'monospace'],
+        sans: ['"Inter"', '"Helvetica"', '"Arial"', 'sans-serif'],
       },
       borderRadius: {
         'none': '0',

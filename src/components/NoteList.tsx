@@ -117,7 +117,7 @@ export default function NoteList() {
           placeholder="搜索笔记..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full py-2 px-3 bg-geek-input border border-geek-border text-geek-text font-mono text-sm placeholder-geek-muted focus:outline-none focus:border-geek-highlight"
+          className="w-full py-2 px-3 bg-geek-input border border-geek-border text-geek-text font-sans text-sm placeholder-geek-muted focus:outline-none focus:border-geek-highlight"
         />
       </div>
 
@@ -131,7 +131,7 @@ export default function NoteList() {
             onChange={(e) => setNewTitle(e.target.value)}
             onKeyDown={handleKeyDown}
             onBlur={handleBlur}
-            className="w-full py-2 px-3 bg-geek-input border border-geek-highlight text-geek-text font-mono text-sm placeholder-geek-muted focus:outline-none"
+            className="w-full py-2 px-3 bg-geek-input border border-geek-highlight text-geek-text font-sans text-sm placeholder-geek-muted focus:outline-none"
             autoFocus
           />
         </div>
@@ -139,7 +139,7 @@ export default function NoteList() {
 
       <div className="flex-1 overflow-y-auto">
         {sortedNotes.length === 0 ? (
-          <div className="p-4 text-center text-geek-muted font-mono text-sm">
+          <div className="p-4 text-center text-geek-muted font-sans text-sm">
             {searchQuery ? '没有找到匹配的笔记' : '暂无笔记，点击下方按钮创建'}
           </div>
         ) : (
@@ -150,8 +150,11 @@ export default function NoteList() {
                 onClick={() => selectNote(note.id)}
                 onContextMenu={(e) => handleContextMenu(e, note.id)}
                 className={`group relative py-3 px-4 cursor-pointer hover:bg-geek-hover transition-colors ${
-                  currentNote?.id === note.id ? 'bg-geek-active' : ''
+                  currentNote?.id === note.id ? 'bg-geek-active border-l-4' : ''
                 }`}
+                style={{
+                  borderLeftColor: currentNote?.id === note.id ? '#39ff14' : 'transparent'
+                }}
               >
                 {renamingNoteId === note.id ? (
                   <input
@@ -161,17 +164,17 @@ export default function NoteList() {
                     onChange={(e) => setRenamingTitle(e.target.value)}
                     onKeyDown={(e) => handleRenameKeyDown(e, note.id)}
                     onBlur={() => handleRenameBlur(note.id)}
-                    className="w-full py-1 px-2 bg-geek-input border border-geek-highlight text-geek-text font-mono text-sm focus:outline-none"
+                    className="w-full py-1 px-2 bg-geek-input border border-geek-highlight text-geek-text font-sans text-sm focus:outline-none"
                     onClick={(e) => e.stopPropagation()}
                   />
                 ) : (
                   <>
                     <div className="flex items-center justify-between">
-                      <span className="flex-1 truncate font-mono text-sm text-geek-text">
+                      <span className="flex-1 truncate font-sans text-sm text-geek-text">
                         {note.title || '未命名笔记'}
                       </span>
                     </div>
-                    <div className="mt-1 text-xs text-geek-muted font-mono">
+                    <div className="mt-1 text-xs text-geek-muted font-sans">
                       {new Date(note.updatedAt).toLocaleString('zh-CN', {
                         month: '2-digit',
                         day: '2-digit',
@@ -190,7 +193,7 @@ export default function NoteList() {
       <div className="p-3 border-t border-geek-border">
         <button
           onClick={() => setIsCreating(true)}
-          className="w-full py-2 px-4 bg-geek-highlight text-geek-bg font-mono text-sm font-bold hover:bg-geek-highlight-hover transition-colors"
+          className="w-full py-2 px-4 bg-geek-highlight text-geek-bg font-sans text-sm font-bold hover:bg-geek-highlight-hover transition-colors"
         >
           + 新建笔记
         </button>
@@ -204,13 +207,13 @@ export default function NoteList() {
       >
         <button
           onClick={handleRename}
-          className="w-full text-left px-4 py-2 text-geek-text font-mono text-sm hover:bg-geek-hover transition-colors"
+          className="w-full text-left px-4 py-2 text-geek-text font-sans text-sm hover:bg-geek-hover transition-colors"
         >
           重命名
         </button>
         <button
           onClick={(e) => handleDeleteNote(e, contextMenu.noteId)}
-          className="w-full text-left px-4 py-2 text-red-400 font-mono text-sm hover:bg-geek-hover transition-colors"
+          className="w-full text-left px-4 py-2 text-red-400 font-sans text-sm hover:bg-geek-hover transition-colors"
         >
           删除
         </button>
