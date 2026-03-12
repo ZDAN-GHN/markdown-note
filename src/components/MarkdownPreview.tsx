@@ -81,10 +81,14 @@ export default function MarkdownPreview({ content }: MarkdownPreviewProps) {
             margin: 0.5em 0;
           }
           .markdown-preview ul li::marker {
-            color: #39ff14;
+            color: #c0c0c0 !important;
+            font-size: 1.1em !important;
+            font-weight: bold !important;
           }
           .markdown-preview ol li::marker {
-            color: #39ff14;
+            color: #c0c0c0 !important;
+            font-size: 1.1em !important;
+            font-weight: bold !important;
           }
           .markdown-preview a {
             color: #39ff14;
@@ -122,7 +126,7 @@ export default function MarkdownPreview({ content }: MarkdownPreviewProps) {
             border: 1px solid #333;
           }
           .markdown-preview strong {
-            color: #39ff14;
+            color: #c0c0c0;
             font-weight: bold;
           }
           .markdown-preview em {
@@ -134,6 +138,27 @@ export default function MarkdownPreview({ content }: MarkdownPreviewProps) {
           remarkPlugins={[remarkGfm]}
           rehypePlugins={[rehypeRaw, rehypeSanitize]}
           components={{
+            ul({ children, ...props }) {
+              return (
+                <ul {...props} style={{ listStyleType: 'disc', listStylePosition: 'inside' }}>
+                  {children}
+                </ul>
+              );
+            },
+            ol({ children, ...props }) {
+              return (
+                <ol {...props} style={{ listStyleType: 'decimal', listStylePosition: 'inside' }}>
+                  {children}
+                </ol>
+              );
+            },
+            li({ children, ...props }) {
+              return (
+                <li {...props} style={{ color: '#c0c0c0', fontSize: '1.1em', fontWeight: 'normal' }}>
+                  {children}
+                </li>
+              );
+            },
             code({ node, className, children, ...props }) {
               const inline = (props as any).inline;
               const match = /language-(\w+)/.exec(className || '');
