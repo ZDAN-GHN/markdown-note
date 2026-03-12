@@ -14,6 +14,7 @@ interface MarkdownEditorProps {
 export default function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
   const editorRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | null>(null);
+  const isInitializedRef = useRef(false);
 
   useEffect(() => {
     if (!editorRef.current) return;
@@ -102,6 +103,7 @@ export default function MarkdownEditor({ value, onChange }: MarkdownEditorProps)
     });
 
     viewRef.current = view;
+    isInitializedRef.current = true;
 
     return () => {
       view.destroy();
@@ -109,15 +111,23 @@ export default function MarkdownEditor({ value, onChange }: MarkdownEditorProps)
   }, []);
 
   useEffect(() => {
-    if (viewRef.current && value !== viewRef.current.state.doc.toString()) {
-      const transaction = viewRef.current.state.update({
-        changes: {
-          from: 0,
-          to: viewRef.current.state.doc.length,
-          insert: value,
-        },
+    if (!isInitializedRef.current || !viewRef.current) return;
+    
+    const currentValue = viewRef.current.state.doc.toString();
+    if (value !== currentValue) {
+      requestAnimationFrame(() => {
+        if (!viewRef.current) return;
+        
+        const docLength = viewRef.current.state.doc.length;
+        const transaction = viewRef.current.state.update({
+          changes: {
+            from: 0,
+            to: docLength,
+            insert: value,
+          },
+        });
+        viewRef.current.dispatch(transaction);
       });
-      viewRef.current.dispatch(transaction);
     }
   }, [value]);
 

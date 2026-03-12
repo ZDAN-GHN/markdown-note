@@ -10,18 +10,71 @@ const DEFAULT_CONTENT = `# 极客风格 Markdown 编辑器
 
 - **实时预览**: 左侧编辑，右侧实时预览
 - **极客风格**: 深色背景，荧光绿高亮
-- **代码高亮**: 支持代码块语法高亮
+- **代码高亮**: 支持多种编程语言语法高亮
 - **行号显示**: 编辑器显示行号
 - **响应式布局**: 适配不同屏幕尺寸
 
 ## 代码示例
+
+### JavaScript
 
 \`\`\`javascript
 function greet(name) {
   return \`Hello, \${name}!\`;
 }
 
-console.log(greet('Geek'));
+const result = greet('Geek');
+console.log(result);
+\`\`\`
+
+### Python
+
+\`\`\`python
+def greet(name):
+    return f"Hello, {name}!"
+
+result = greet("Geek")
+print(result)
+\`\`\`
+
+### Java
+
+\`\`\`java
+public class HelloWorld {
+    public static void main(String[] args) {
+        String name = "Geek";
+        System.out.println("Hello, " + name + "!");
+    }
+}
+\`\`\`
+
+### TypeScript
+
+\`\`\`typescript
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+function createUser(user: User): User {
+  return {
+    ...user,
+    id: Date.now()
+  };
+}
+\`\`\`
+
+### CSS
+
+\`\`\`css
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1a1a1a;
+  color: #39ff14;
+}
 \`\`\`
 
 ## 表格示例
@@ -30,6 +83,7 @@ console.log(greet('Geek'));
 |------|------|
 | 编辑器 | ✅ |
 | 预览 | ✅ |
+| 代码高亮 | ✅ |
 | 存储 | 🚧 |
 
 ## 列表示例

@@ -2,6 +2,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import rehypeSanitize from 'rehype-sanitize';
+import CodeBlock from './CodeBlock';
 
 interface MarkdownPreviewProps {
   content: string;
@@ -55,7 +56,7 @@ export default function MarkdownPreview({ content }: MarkdownPreviewProps) {
           .markdown-preview pre {
             background-color: #1a1a1a;
             border: 1px solid #333;
-            padding: 1em;
+            padding: 0;
             overflow-x: auto;
             margin: 1em 0;
           }
@@ -132,6 +133,23 @@ export default function MarkdownPreview({ content }: MarkdownPreviewProps) {
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           rehypePlugins={[rehypeRaw, rehypeSanitize]}
+          components={{
+            code({ node, className, children, ...props }) {
+              const inline = (props as any).inline;
+              const match = /language-(\w+)/.exec(className || '');
+              const language = match ? match[1] : 'text';
+              
+              if (!inline && match) {
+                return <CodeBlock language={language}>{String(children).replace(/\n$/, '')}</CodeBlock>;
+              }
+              
+              return (
+                <code className={className} {...props}>
+                  {children}
+                </code>
+              );
+            },
+          }}
         >
           {content}
         </ReactMarkdown>
