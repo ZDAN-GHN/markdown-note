@@ -1,47 +1,16 @@
-import { useEffect, useRef } from 'react';
-import { marked } from 'marked';
-import DOMPurify from 'dompurify';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
+import rehypeSanitize from 'rehype-sanitize';
 
 interface MarkdownPreviewProps {
   content: string;
 }
 
 export default function MarkdownPreview({ content }: MarkdownPreviewProps) {
-  const previewRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!previewRef.current) return;
-
-    const renderMarkdown = () => {
-      const html = marked.parse(content);
-      const cleanHtml = DOMPurify.sanitize(html as string, {
-        ALLOWED_TAGS: [
-          'p', 'br', 'strong', 'em', 'u', 'del', 'code', 'pre',
-          'blockquote', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-          'ul', 'ol', 'li', 'a', 'img', 'table', 'thead', 'tbody',
-          'tr', 'th', 'td', 'span', 'div', 'hr', 'input', 'label'
-        ],
-        ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'id', 'type', 'checked', 'disabled'],
-      });
-      
-      if (previewRef.current) {
-        previewRef.current.innerHTML = cleanHtml;
-      }
-    };
-
-    renderMarkdown();
-  }, [content]);
-
   return (
     <div className="h-full w-full overflow-auto">
-      <div
-        ref={previewRef}
-        className="markdown-preview p-6 text-geek-text font-mono text-sm leading-relaxed"
-        style={{
-          backgroundColor: '#1a1a1a',
-          minHeight: '100%',
-        }}
-      >
+      <div className="markdown-preview p-6 text-geek-text font-mono text-sm leading-relaxed" style={{ backgroundColor: '#1a1a1a', minHeight: '100%' }}>
         <style>{`
           .markdown-preview h1 {
             font-size: 2em;
@@ -160,6 +129,12 @@ export default function MarkdownPreview({ content }: MarkdownPreviewProps) {
             font-style: italic;
           }
         `}</style>
+        <ReactMarkdown
+          remarkPlugins={[remarkGfm]}
+          rehypePlugins={[rehypeRaw, rehypeSanitize]}
+        >
+          {content}
+        </ReactMarkdown>
       </div>
     </div>
   );
