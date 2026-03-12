@@ -5,7 +5,23 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        geek: {
+          bg: '#0a0a0a',
+          border: '#333333',
+          text: '#c0c0c0',
+          highlight: '#39ff14',
+          muted: '#666666',
+        },
+      },
+      fontFamily: {
+        mono: ['"Fira Code"', '"Monaco"', '"Courier New"', 'monospace'],
+      },
+      borderRadius: {
+        'none': '0',
+      },
+    },
   },
   plugins: [],
 }

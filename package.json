@@ -10,9 +10,25 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@codemirror/autocomplete": "^6.20.1",
+    "@codemirror/commands": "^6.10.2",
+    "@codemirror/fold": "^0.19.4",
+    "@codemirror/gutter": "^0.19.9",
+    "@codemirror/history": "^0.19.2",
+    "@codemirror/language": "^6.12.2",
+    "@codemirror/lint": "^6.9.5",
+    "@codemirror/rectangular-selection": "^0.19.2",
+    "@codemirror/search": "^6.6.0",
+    "@codemirror/state": "^6.5.4",
+    "@codemirror/view": "^6.39.17",
+    "dompurify": "^3.3.3",
+    "marked": "^17.0.4",
     "npx": "^10.2.2",
+    "prismjs": "^1.30.0",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "react-markdown": "^10.1.0",
+    "rehype-sanitize": "^6.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
